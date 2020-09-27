@@ -6,11 +6,8 @@ class Touch:
     def __init__(self, key, keyboard):
 
         self.key = key
-        pos = key.pos
 
-        self.target = pos
-
-        self.pos = pos
+        self.pos = key.pos
         self.vel = Vector(0, 0)
 
         self.keyboard = keyboard
@@ -27,7 +24,7 @@ class Touch:
 
         # Calculate acceleration force
         a = self.pos
-        b = self.target
+        b = self.key.pos
 
         force = b.sub(a)
 
@@ -50,8 +47,8 @@ class Touch:
                 self.is_dead = True
                 self.is_dying = False
 
-    def set_target(self, pos):
-        self.target = pos
+    def set_target(self, key):
+        self.key = key
 
     def stop(self):
         self.is_dying = True

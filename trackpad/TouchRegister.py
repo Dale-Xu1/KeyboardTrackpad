@@ -41,7 +41,7 @@ class TouchRegister:
             self.touches.append(touch)
 
         else:
-            nearest_touch.set_target(key.pos)
+            nearest_touch.set_target(key)
 
     def on_release(self, key):
 

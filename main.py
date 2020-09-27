@@ -10,5 +10,4 @@ if __name__ == '__main__':
     window.title("Keyboard Trackpad")
 
     trackpad = Trackpad(window)
-
     window.mainloop()
