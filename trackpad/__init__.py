@@ -1,5 +1,6 @@
 import csv
 import keyboard
+import mouse
 
 from trackpad.Keyboard import Keyboard
 from trackpad.TouchRegister import TouchRegister
@@ -45,18 +46,43 @@ class Trackpad:
     def update(self):
 
         self.touch_register.update()
+        touches = self.touch_register.touches
+
+        if len(touches) > 1:
+
+            # Average y velocity of touches
+            vel = 0
+
+            for touch in touches:
+                vel += touch.vel.y
+
+            mouse.wheel(vel / len(touches) * 0.1)
+
+        elif len(touches) > 0:
+
+            # Move mouse
+            touch = touches[0]
+            mouse.move(touch.vel.x * 5, touch.vel.y * 5, absolute=False)
+
         self.window.after(20, self.update)
 
     def on_key_down(self, e):
 
-        for key in self.keys:
-            if key.name == e.name:
+        if e.name == 'space':
+            mouse.click()
 
-                # Register touch
-                self.touch_register.on_touch(key)
-                break
+        elif e.name == 'right alt':
+            mouse.right_click()
 
-        self.keyboard.on_key_down(e.name)
+        else:
+            for key in self.keys:
+                if key.name == e.name:
+
+                    # Register touch
+                    self.touch_register.on_touch(key)
+                    break
+
+            self.keyboard.on_key_down(e.name)
 
     def on_key_up(self, e):
 
