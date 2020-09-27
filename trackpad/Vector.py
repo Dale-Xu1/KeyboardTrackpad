@@ -12,3 +12,6 @@ class Vector:
 
     def mult(self, value):
         return Vector(self.x * value, self.y * value)
+
+    def mag_sq(self):
+        return (self.x * self.x) + (self.y * self.y)

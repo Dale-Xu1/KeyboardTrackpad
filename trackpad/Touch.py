@@ -25,6 +25,16 @@ class Touch:
 
     def update(self):
 
+        # Calculate acceleration force
+        a = self.pos
+        b = self.target
+
+        force = b.sub(a)
+
+        # Integrate force
+        self.vel = self.vel.add(force.mult(0.3)).mult(0.5)  # Poor man's inverse mass and drag
+        self.pos = self.pos.add(self.vel)
+
         # Update circle
         self.keyboard.coords(
             self.oval,
